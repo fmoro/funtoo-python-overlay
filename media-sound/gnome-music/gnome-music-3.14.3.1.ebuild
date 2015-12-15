@@ -4,7 +4,7 @@
 
 EAPI="5"
 GCONF_DEBUG="no"
-PYTHON_COMPAT=( python{3_3,3_4,3_5} )
+PYTHON_COMPAT=( python3_{3,4,5} )
 
 inherit gnome2 python-single-r1
 
