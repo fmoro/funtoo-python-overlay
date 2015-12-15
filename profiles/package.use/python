@@ -1,0 +1,13 @@
+#sys-boot/boot-update python_single_target_python3_3
+#sys-apps/util-linux python_single_target_python3_3
+#sys-fs/cryptsetup python_single_target_python3_3
+#app-admin/system-config-printer python_single_target_python3_3
+#fucking flask needs flask-mongoengine and flask-debugtoolbar with python3_3
+#dev-python/flask-mongoengine python_single_target_python3_3 -python_targets_python3_5
+#dev-python/flask-debugtoolbar python_single_target_python3_3 -python_targets_python3_5
+#dev-python/flask python_single_target_python3_3
+#dev-python/flask-wtf python_single_target_python3_3 -python_targets_python3_5
+#dev-python/wtforms python_single_target_python3_3
+app-editors/gedit -python_targets_python3_3
+dev-libs/libpeas -python_targets_python3_3
+app-editors/vim -python_targets_python3_3
