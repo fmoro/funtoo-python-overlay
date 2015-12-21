@@ -4,7 +4,7 @@
 
 EAPI=5
 
-PYTHON_COMPAT=( python{2_7,3_3,3_4,3_5} pypy )
+PYTHON_COMPAT=( python{2_7,3_{3,4,5}} pypy )
 
 inherit distutils-r1
 
@@ -65,8 +65,12 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-NA-tests-fix.patch
 	)
 
+pkg_setup() {
+	use doc && DISTUTILS_ALL_SUBPHASE_IMPLS=( python2.7 )
+}
+
 python_prepare_all() {
-	https://github.com/celery/kombu/issues/246
+	# https://github.com/celery/kombu/issues/246
 	sed -e 's:kombu.transports:kombu.transport:' -i funtests/tests/test_django.py
 	distutils-r1_python_prepare_all
 }

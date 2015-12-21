@@ -5,7 +5,7 @@
 EAPI=5
 PYTHON_COMPAT=( python{2_7,3_{3,4,5}} )
 
-inherit distutils-r1 toolchain-funcs
+inherit eutils distutils-r1 toolchain-funcs
 
 DESCRIPTION="Object-oriented python bindings for subversion"
 HOMEPAGE="http://pysvn.tigris.org/"
@@ -17,20 +17,19 @@ KEYWORDS="~amd64 ~arm ~ppc ~x86 ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos 
 IUSE="doc examples"
 
 DEPEND="
-	>=dev-python/pycxx-6.2.0[${PYTHON_USEDEP}]
-	<dev-vcs/subversion-1.9"
+	>=dev-python/pycxx-6.2.6[${PYTHON_USEDEP}]
+	dev-vcs/subversion"
 RDEPEND="${DEPEND}"
 
 PATCHES=( "${FILESDIR}"/${P}-respect_flags.patch )
 
-python_prepare() {
+DISTUTILS_IN_SOURCE_BUILD=true
+
+python_prepare_all() {
 	# Don't use internal copy of dev-python/pycxx.
 	rm -r Import || die
 
-	# http://pysvn.tigris.org/source/browse/pysvn?view=rev&revision=1469
-	sed \
-		-e "s/PYSVN_HAS_SVN_CLIENT_CTX_T__CONFLICT_FUNC_16/PYSVN_HAS_SVN_CLIENT_CTX_T__CONFLICT_FUNC_1_6/" \
-		-i Source/pysvn_svnenv.hpp || die
+	distutils-r1_python_prepare_all
 }
 
 python_configure() {
@@ -55,7 +54,7 @@ python_install() {
 }
 
 python_install_all() {
-	use doc && local HTML_DOCS=( Docs/ )
+	use doc && local HTML_DOCS=( Docs/. )
 	use examples && local EXAMPLES=( Examples/Client/. )
 	distutils-r1_python_install_all
 }
