@@ -3,13 +3,13 @@
 # $Id$
 
 EAPI=5
-PYTHON_COMPAT=( python2_7 python3_{3,4,5} )
+PYTHON_COMPAT=( python2_7 python3_3 python3_4 python3_5 )
 
 inherit distutils-r1 vcs-snapshot
 
-DESCRIPTION="The AWS SDK for Python"
-HOMEPAGE="https://github.com/boto/boto3"
-SRC_URI="https://github.com/boto/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
+DESCRIPTION="Low-level, data-driven core of boto 3."
+HOMEPAGE="https://github.com/boto/botocore"
+SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="0"
@@ -17,12 +17,11 @@ KEYWORDS="~amd64"
 IUSE="doc test"
 
 CDEPEND="
-	>=dev-python/botocore-1.1.0[${PYTHON_USEDEP}]
-	<dev-python/botocore-1.2.0[${PYTHON_USEDEP}]
-	>=dev-python/jmespath-0.6.2[${PYTHON_USEDEP}]
+	>=dev-python/docutils-0.10[${PYTHON_USEDEP}]
+	>=dev-python/jmespath-0.7.1[${PYTHON_USEDEP}]
 	<dev-python/jmespath-1.0.0[${PYTHON_USEDEP}]
-	=dev-python/futures-2.2.0
-	virtual/python-futures[${PYTHON_USEDEP}]
+	>=dev-python/python-dateutil-2.1[${PYTHON_USEDEP}]
+	<dev-python/python-dateutil-3.0.0[${PYTHON_USEDEP}]
 "
 DEPEND="
 	dev-python/setuptools[${PYTHON_USEDEP}]
@@ -34,7 +33,7 @@ DEPEND="
 	)
 	test? (
 		${CDEPEND}
-		dev-python/mock[${PYTHON_USEDEP}]
+		~dev-python/mock-1.0.1[${PYTHON_USEDEP}]
 		dev-python/nose[${PYTHON_USEDEP}]
 	)
 "
@@ -45,7 +44,7 @@ python_compile_all() {
 }
 
 python_test() {
-	nosetests tests/unit/ tests/functional/ || die "test failed under ${EPYTHON}"
+	nosetests tests/unit || die "tests failed under ${EPYTHON}"
 }
 
 python_install_all() {
