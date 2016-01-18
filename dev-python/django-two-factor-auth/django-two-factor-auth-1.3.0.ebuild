@@ -1,10 +1,10 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
 EAPI=5
 
-PYTHON_COMPAT=( python{2_7,3_3,3_4,3_5} )
+PYTHON_COMPAT=( python{2_7,3_{3,4,5}} )
 
 inherit eutils distutils-r1
 
@@ -18,10 +18,13 @@ KEYWORDS="~amd64 ~x86"
 
 IUSE="test yubikey"
 
-CDEPEND=">=dev-python/django-1.4.2[${PYTHON_USEDEP}]
-		>=dev-python/django-otp-0.2.0[${PYTHON_USEDEP}]
+CDEPEND=">=dev-python/django-1.8[${PYTHON_USEDEP}]
+		>=dev-python/django-otp-0.3.3[${PYTHON_USEDEP}]
 		dev-python/qrcode[${PYTHON_USEDEP}]
 		dev-python/twilio[${PYTHON_USEDEP}]
+		>=dev-python/phonenumbers-7.0.9[${PYTHON_USEDEP}]
+		=dev-python/django-phonenumber-field-0.7.2[${PYTHON_USEDEP}]
+		dev-python/django-formtools[${PYTHON_USEDEP}]
 		yubikey? ( dev-python/django-otp-yubikey[${PYTHON_USEDEP}] )
 		"
 
@@ -31,11 +34,6 @@ DEPEND="test? (
 			dev-python/mock[${PYTHON_USEDEP}]
 			${CDEPEND}
 		)"
-
-python_prepare_all() {
-	distutils-r1_python_prepare_all
-	sed -i "/'qrcode/s/^/#/" setup.py || die
-}
 
 python_test() {
 	emake test
