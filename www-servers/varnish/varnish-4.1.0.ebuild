@@ -4,7 +4,7 @@
 
 EAPI="5"
 
-PYTHON_COMPAT=( python{2_7,3_3,3_4,3_5} pypy )
+PYTHON_COMPAT=( python{2_7,3_{3,4,5}} pypy )
 
 inherit user autotools-utils eutils systemd python-r1
 
