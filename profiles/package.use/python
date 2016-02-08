@@ -1,4 +1,5 @@
 app-editors/gedit -python_targets_python3_3
-dev-libs/libpeas -python_targets_python3_3
+app-editors/gvim -python_targets_python3_3
 app-editors/vim -python_targets_python3_3
+dev-libs/libpeas -python_targets_python3_3
 media-gfx/fontforge python_single_target_python3_3 -python_single_target_python3_5
