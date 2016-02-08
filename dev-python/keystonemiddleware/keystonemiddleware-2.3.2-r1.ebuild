@@ -1,4 +1,4 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -63,6 +63,7 @@ RDEPEND="
 	>=dev-python/webob-1.2.3[${PYTHON_USEDEP}]"
 
 PATCHES=(
+	"${FILESDIR}/CVE-2015-7546_2.3.2.patch"
 )
 
 python_prepare_all() {
