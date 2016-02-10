@@ -1,0 +1,1 @@
+funtoo/1.0/linux-gnu/mix-ins/python-3.5/package.mask
