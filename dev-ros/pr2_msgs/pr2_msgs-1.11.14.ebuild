@@ -3,16 +3,16 @@
 # $Id$
 
 EAPI=5
-CATKIN_HAS_MESSAGES=yes
-ROS_REPO_URI="https://github.com/ros/common_msgs"
-KEYWORDS="~amd64 ~arm"
-PYTHON_COMPAT=( python{2_7,3_3,3_4,3_5} )
+ROS_REPO_URI="https://github.com/pr2/pr2_common"
+KEYWORDS="~amd64"
 ROS_SUBDIR=${PN}
+CATKIN_HAS_MESSAGES=yes
+PYTHON_COMPAT=( python{2_7,3_{3,4,5}} )
 CATKIN_MESSAGES_TRANSITIVE_DEPS="dev-ros/std_msgs dev-ros/geometry_msgs"
 
 inherit ros-catkin
 
-DESCRIPTION="Messages used by higher level packages that deal in visualization-specific data."
+DESCRIPTION="Messages for representing PR2 state, such as battery information and the PR2 fingertip sensors"
 LICENSE="BSD"
 SLOT="0"
 IUSE=""
