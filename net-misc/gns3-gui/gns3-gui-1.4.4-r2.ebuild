@@ -15,11 +15,7 @@ SRC_URI="https://github.com/GNS3/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="+qt4 qt5"
-
-REQUIRED_USE="
-	?? ( qt4 qt5 )
-"
+IUSE=""
 
 #net-misc/gns3-server version should always match gns3-gui version
 
@@ -30,17 +26,10 @@ RDEPEND="
 	>=dev-python/paramiko-1.15.1[${PYTHON_USEDEP}]
 	>=dev-python/psutil-3.0.0[${PYTHON_USEDEP}]
 	>=net-misc/gns3-converter-1.3.0[${PYTHON_USEDEP}]
-	=net-misc/gns3-server-$PV[${PYTHON_USEDEP}]
-	qt4? (
-		dev-qt/qtgui:4[accessibility]
-		dev-qt/qtsvg:4
-		>=dev-python/PyQt4-4.11.2[X,svg,${PYTHON_USEDEP}]
-		)
-	qt5? (
-		dev-qt/qtgui:5
-		dev-qt/qtsvg:5
-		dev-python/PyQt5[svg,${PYTHON_USEDEP}]
-	)
+	=net-misc/gns3-server-$PVR[${PYTHON_USEDEP}]
+	dev-qt/qtgui:5
+	dev-qt/qtsvg:5
+	dev-python/PyQt5[gui,network,svg,widgets,${PYTHON_USEDEP}]
 "
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
 
