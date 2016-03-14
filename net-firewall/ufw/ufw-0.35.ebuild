@@ -1,8 +1,8 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 PYTHON_COMPAT=( python{2_7,3_{3,4,5}} )
 DISTUTILS_IN_SOURCE_BUILD=1
 
@@ -10,11 +10,11 @@ inherit bash-completion-r1 eutils linux-info distutils-r1 systemd
 
 DESCRIPTION="A program used to manage a netfilter firewall"
 HOMEPAGE="https://launchpad.net/ufw"
-SRC_URI="mirror://sabayon/${CATEGORY}/${P}.tar.gz"
+SRC_URI="https://launchpad.net/ufw/${PV}/${PV}/+download/${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="amd64 ia64 ppc ppc64 sparc ~x86"
+KEYWORDS="~amd64 ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="examples ipv6"
 
 DEPEND="sys-devel/gettext"
@@ -30,9 +30,9 @@ PATCHES=(
 	# Remove unnecessary build time dependency on net-firewall/iptables.
 	"${FILESDIR}"/${PN}-0.33-dont-check-iptables.patch
 	# Move files away from /lib/ufw.
-	"${FILESDIR}"/${PN}-0.31.1-move-path.patch
+	"${FILESDIR}"/${PN}-0.35-move-path.patch
 	# Remove shebang modification.
-	"${FILESDIR}"/${P}-shebang.patch
+	"${FILESDIR}"/${PN}-0.34_pre805-shebang.patch
 	# Fix bash completions, bug #526300
 	"${FILESDIR}"/${P}-bash-completion.patch
 )
