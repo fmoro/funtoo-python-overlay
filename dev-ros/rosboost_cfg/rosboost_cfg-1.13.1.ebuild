@@ -4,14 +4,14 @@
 
 EAPI=5
 
-ROS_REPO_URI="https://github.com/ros/std_msgs"
-CATKIN_HAS_MESSAGES=yes
+ROS_REPO_URI="https://github.com/ros/ros"
 KEYWORDS="~amd64 ~arm"
-PYTHON_COMPAT=( python{2_7,3_3,3_4,3_5} )
+ROS_SUBDIR=tools/${PN}
+PYTHON_COMPAT=( python{2_7,3_{3,4,5}} )
 
-inherit ${SCM} ros-catkin
+inherit ros-catkin
 
-DESCRIPTION="Standard ROS Messages"
+DESCRIPTION="Tool for determining cflags/lflags/etc. of boost on your system"
 LICENSE="BSD"
 SLOT="0"
 IUSE=""

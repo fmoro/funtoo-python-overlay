@@ -4,14 +4,16 @@
 
 EAPI=5
 
-ROS_REPO_URI="https://github.com/ros/std_msgs"
 CATKIN_HAS_MESSAGES=yes
+ROS_REPO_URI="https://github.com/ros/ros_comm_msgs"
 KEYWORDS="~amd64 ~arm"
-PYTHON_COMPAT=( python{2_7,3_3,3_4,3_5} )
+PYTHON_COMPAT=( python{2_7,3_{3,4,5}} )
+ROS_SUBDIR=${PN}
+CATKIN_MESSAGES_TRANSITIVE_DEPS="dev-ros/std_msgs"
 
-inherit ${SCM} ros-catkin
+inherit ros-catkin
 
-DESCRIPTION="Standard ROS Messages"
+DESCRIPTION="Messages relating to ROS comm"
 LICENSE="BSD"
 SLOT="0"
 IUSE=""
