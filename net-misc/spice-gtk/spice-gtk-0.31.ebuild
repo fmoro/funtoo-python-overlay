@@ -1,4 +1,4 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -8,7 +8,7 @@ WANT_AUTOMAKE="1.12"
 VALA_MIN_API_VERSION="0.14"
 VALA_USE_DEPEND="vapigen"
 
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python{2_7,3_{4,5}} )
 
 inherit autotools eutils multibuild python-single-r1 vala
 
@@ -19,10 +19,10 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 SRC_URI="http://spice-space.org/download/gtk/${P}.tar.bz2"
 KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
-IUSE="dbus gstreamer gtk3 +introspection lz4 policykit pulseaudio python sasl smartcard static-libs usbredir vala webdav"
+IUSE="dbus gstreamer gtk3 +introspection lz4 policykit pulseaudio python sasl smartcard static-libs usbredir vala webdav libressl"
 
 REQUIRED_USE="
-	python? ( ${PYTHON_REQUIRED_USE} )
+	${PYTHON_REQUIRED_USE}
 	?? ( pulseaudio gstreamer )
 "
 
@@ -31,19 +31,21 @@ REQUIRED_USE="
 # * use external pnp.ids as soon as that means not pulling in gnome-desktop
 RDEPEND="
 	${PYTHON_DEPS}
+	!libressl? ( dev-libs/openssl:0= )
+	libressl? ( dev-libs/libressl:0= )
 	pulseaudio? ( media-sound/pulseaudio[glib] )
 	gstreamer? (
 		media-libs/gstreamer:1.0
-		media-libs/gst-plugins-base:1.0 )
+		media-libs/gst-plugins-base:1.0
+		media-libs/gst-plugins-good:1.0 )
 	>=x11-libs/pixman-0.17.7
 	>=media-libs/celt-0.5.1.1:0.5.1
 	media-libs/opus
-	dev-libs/openssl:=
 	gtk3? ( x11-libs/gtk+:3[introspection?] )
 	x11-libs/gtk+:2[introspection?]
 	>=dev-libs/glib-2.28:2
 	>=x11-libs/cairo-1.2
-	virtual/jpeg:=
+	virtual/jpeg:0=
 	sys-libs/zlib
 	introspection? ( dev-libs/gobject-introspection )
 	lz4? ( app-arch/lz4 )
@@ -66,11 +68,13 @@ RDEPEND="
 		>=net-libs/libsoup-2.49.91 )
 "
 DEPEND="${RDEPEND}
-	dev-lang/python
-	dev-python/pyparsing
+	~app-emulation/spice-protocol-0.12.11
 	dev-perl/Text-CSV
+	dev-python/pyparsing[${PYTHON_USEDEP}]
+	dev-python/six[${PYTHON_USEDEP}]
 	>=dev-util/gtk-doc-am-1.14
 	>=dev-util/intltool-0.40.0
+	${PYTHON_DEPS}
 	>=sys-devel/gettext-0.17
 	virtual/pkgconfig
 	vala? ( $(vala_depend) )
