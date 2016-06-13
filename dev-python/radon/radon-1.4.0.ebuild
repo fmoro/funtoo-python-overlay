@@ -1,9 +1,9 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
 EAPI=5
-PYTHON_COMPAT=( python2_7 python3_{3,4,5} )
+PYTHON_COMPAT=( python{2_7,3_{3,4,5}} )
 
 inherit distutils-r1
 
@@ -18,8 +18,10 @@ IUSE="doc test"
 
 CDEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
 RCDEPEND="
-	dev-python/mando[${PYTHON_USEDEP}]
-	dev-python/colorama[${PYTHON_USEDEP}]
+	>=dev-python/colorama-0.3[${PYTHON_USEDEP}]
+	<dev-python/colorama-0.4[${PYTHON_USEDEP}]
+	>=dev-python/mando-0.3[${PYTHON_USEDEP}]
+	<dev-python/mando-0.4[${PYTHON_USEDEP}]
 "
 DEPEND="
 	doc? ( dev-python/sphinx[${PYTHON_USEDEP}] )
