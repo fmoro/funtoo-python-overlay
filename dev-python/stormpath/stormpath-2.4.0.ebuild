@@ -1,10 +1,10 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
 EAPI=5
 
-PYTHON_COMPAT=( python2_7 python3_{3,4,5} )
+PYTHON_COMPAT=( python{2_7,3_{3,4,5}} )
 
 inherit distutils-r1 vcs-snapshot
 
@@ -28,7 +28,7 @@ DEPEND="
 "
 RDEPEND="
 	>=dev-python/isodate-0.5.4[${PYTHON_USEDEP}]
-	>=dev-python/oauthlib-0.6.3[${PYTHON_USEDEP}]
+	<=dev-python/oauthlib-1.0.3[${PYTHON_USEDEP}]
 	>=dev-python/pydispatcher-2.0.5[${PYTHON_USEDEP}]
 	>=dev-python/pyjwt-1.0.0[${PYTHON_USEDEP}]
 	>=dev-python/python-dateutil-2.4.0[${PYTHON_USEDEP}]

@@ -3,7 +3,7 @@
 # $Id$
 
 EAPI=5
-PYTHON_COMPAT=( python{2_7,3_3,3_4,3_5} )
+PYTHON_COMPAT=( python{2_7,3_{3,4,5}} )
 inherit python-r1
 
 DESCRIPTION="Enhanced df with colors"
@@ -12,7 +12,7 @@ SRC_URI="http://kassiopeia.juls.savba.sk/~garabik/software/pydf/${PN}_${PV}.tar.
 
 LICENSE="public-domain"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~ppc ~ppc64 ~x86 ~x86-fbsd ~amd64-linux ~x86-linux"
+KEYWORDS="amd64 arm ppc ppc64 x86 ~x86-fbsd ~amd64-linux ~x86-linux"
 IUSE=""
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
