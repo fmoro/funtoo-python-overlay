@@ -3,7 +3,7 @@
 # $Id$
 
 EAPI=5
-PYTHON_COMPAT=( python{2_7,3_3,3_4,3_5} )
+PYTHON_COMPAT=( python{2_7,3_{3,4,5}} )
 #BACKPORTS=
 
 inherit autotools eutils gnome2-utils python-r1 systemd multilib bash-completion-r1
@@ -73,6 +73,7 @@ src_install() {
 
 	# For non-gui installs we need to remove GUI bits
 	if ! use gui; then
+		rm -rf "${D}/etc/xdg/autostart"
 		rm -f "${D}/usr/bin/firewall-applet"
 		rm -f "${D}/usr/bin/firewall-config"
 		rm -rf "${D}/usr/share/icons"
