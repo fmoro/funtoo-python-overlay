@@ -3,7 +3,7 @@
 # $Id$
 
 EAPI=5
-PYTHON_COMPAT=( python{2_7,3_{3,4,5}} )
+PYTHON_COMPAT=( python{2_7,3_{4,5}} )
 
 inherit distutils-r1
 
@@ -20,6 +20,7 @@ CDEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
 RCDEPEND="
 	>=dev-python/colorama-0.3[${PYTHON_USEDEP}]
 	<dev-python/colorama-0.4[${PYTHON_USEDEP}]
+	dev-python/flake8-polyfill[${PYTHON_USEDEP}]
 	>=dev-python/mando-0.3[${PYTHON_USEDEP}]
 	<dev-python/mando-0.4[${PYTHON_USEDEP}]
 "
