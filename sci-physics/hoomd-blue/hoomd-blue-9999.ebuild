@@ -7,7 +7,7 @@ EAPI=6
 PYTHON_COMPAT=( python{2_7,3_{3,4,5}} )
 CMAKE_MAKEFILE_GENERATOR="ninja"
 
-inherit cmake-utils cuda flag-o-matic python-single-r1
+inherit cmake-utils cuda python-r1
 
 DESCRIPTION="a general-purpose particle simulation toolkit"
 HOMEPAGE="http://codeblue.umich.edu/hoomd-blue/"
@@ -43,13 +43,28 @@ src_prepare() {
 }
 
 src_configure() {
-	local mycmakeargs=(
-		-DENABLE_MPI=$(usex mpi)
-		-DENABLE_CUDA=$(usex cuda)
-		-DBUILD_TESTING=$(usex test)
-		-DPYTHON_EXECUTABLE="${PYTHON}"
-		-DCMAKE_INSTALL_PREFIX=$(python_get_sitedir)
-		-DUPDATE_SUBMODULES=OFF
-	)
-	cmake-utils_src_configure
+	src_configure_internal() {
+		local mycmakeargs=(
+			-DENABLE_MPI=$(usex mpi)
+			-DENABLE_CUDA=$(usex cuda)
+			-DBUILD_TESTING=$(usex test)
+			-DUPDATE_SUBMODULES=OFF
+			-DPYTHON_EXECUTABLE="${PYTHON}"
+			-DCMAKE_INSTALL_PREFIX=$(python_get_sitedir)
+		)
+		cmake-utils_src_configure
+	}
+	python_foreach_impl src_configure_internal
+}
+
+src_compile() {
+	python_foreach_impl cmake-utils_src_make
+}
+
+src_test() {
+	python_foreach_impl cmake-utils_src_test
+}
+
+src_install() {
+	python_foreach_impl cmake-utils_src_install
 }
