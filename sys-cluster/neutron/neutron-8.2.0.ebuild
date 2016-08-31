@@ -77,7 +77,7 @@ RDEPEND="
 	>=dev-python/alembic-0.8.0[${PYTHON_USEDEP}]
 	>=dev-python/six-1.9.0[${PYTHON_USEDEP}]
 	>=dev-python/stevedore-1.5.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-concurrency-3.5.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-concurrency-3.7.1[${PYTHON_USEDEP}]
 	>=dev-python/oslo-config-3.7.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-context-0.2.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-db-4.1.0[${PYTHON_USEDEP}]
@@ -102,8 +102,12 @@ RDEPEND="
 	net-firewall/ipset
 	net-firewall/iptables
 	net-firewall/ebtables
+	net-firewall/conntrack-tools
 	openvswitch? ( <=net-misc/openvswitch-2.5.9999 )
-	ipv6? ( net-misc/radvd )
+	ipv6? (
+		net-misc/radvd
+		>=net-misc/dibbler-1.0.1
+	)
 	dhcp? ( net-dns/dnsmasq[dhcp-tools] )"
 
 #PATCHES=(
