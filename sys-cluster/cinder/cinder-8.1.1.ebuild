@@ -5,22 +5,21 @@
 EAPI=6
 PYTHON_COMPAT=( python{2_7,3_{4,5}} )
 
-inherit distutils-r1 eutils git-r3 linux-info user
+inherit distutils-r1 eutils linux-info user
 
 DESCRIPTION="Cinder is the OpenStack Block storage service, a spin out of nova-volumes"
 HOMEPAGE="https://launchpad.net/cinder"
-SRC_URI="https://dev.gentoo.org/~prometheanfire/dist/openstack/cinder/mitaka/cinder.conf.sample -> mitaka-cinder.conf.sample
-https://dev.gentoo.org/~prometheanfire/dist/openstack/cinder/mitaka/api-paste.ini -> mitaka-cinder-api-paste.ini
-https://dev.gentoo.org/~prometheanfire/dist/openstack/cinder/mitaka/policy.json -> mitaka-cinder-policy.json
-https://dev.gentoo.org/~prometheanfire/dist/openstack/cinder/mitaka/volume.filters -> mitaka-cinder-volume.filters"
-EGIT_REPO_URI="https://github.com/openstack/cinder.git"
-EGIT_BRANCH="stable/mitaka"
+SRC_URI="https://tarballs.openstack.org/${PN}/${P}.tar.gz
+	https://dev.gentoo.org/~prometheanfire/dist/openstack/cinder/mitaka/cinder.conf.sample -> mitaka-cinder.conf.sample
+	https://dev.gentoo.org/~prometheanfire/dist/openstack/cinder/mitaka/api-paste.ini -> mitaka-cinder-api-paste.ini
+	https://dev.gentoo.org/~prometheanfire/dist/openstack/cinder/mitaka/policy.json -> mitaka-cinder-policy.json
+	https://dev.gentoo.org/~prometheanfire/dist/openstack/cinder/mitaka/volume.filters -> mitaka-cinder-volume.filters"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS=""
-IUSE="+api +scheduler +volume infiniband iscsi lio lvm mysql +memcached postgres rdma sqlite +tcp test +tgt"
-REQUIRED_USE="|| ( mysql postgres sqlite ) iscsi? ( || ( tgt lio ) ) infiniband? ( rdma )"
+KEYWORDS="~amd64 ~arm64 ~x86"
+IUSE="+api +scheduler +volume iscsi lvm mysql +memcached postgres sqlite test"
+REQUIRED_USE="|| ( mysql postgres sqlite )"
 
 CDEPEND=">=dev-python/pbr-1.6[${PYTHON_USEDEP}]"
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
@@ -30,6 +29,10 @@ DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 RDEPEND="
 	${CDEPEND}
 	>=dev-python/Babel-1.3[${PYTHON_USEDEP}]
+	!~dev-python/Babel-2.3.0[${PYTHON_USEDEP}]
+	!~dev-python/Babel-2.3.1[${PYTHON_USEDEP}]
+	!~dev-python/Babel-2.3.2[${PYTHON_USEDEP}]
+	!~dev-python/Babel-2.3.3[${PYTHON_USEDEP}]
 	>=dev-python/decorator-3.4.0[${PYTHON_USEDEP}]
 	dev-python/enum34[$(python_gen_usedep 'python2_7')]
 	>=dev-python/eventlet-0.18.4[${PYTHON_USEDEP}]
@@ -41,7 +44,7 @@ RDEPEND="
 	>=dev-python/lxml-2.3[${PYTHON_USEDEP}]
 	>=dev-python/oauth2client-1.5.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-config-3.7.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-concurrency-3.5.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-concurrency-3.7.1[${PYTHON_USEDEP}]
 	>=dev-python/oslo-context-0.2.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-db-4.1.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-log-1.14.0[${PYTHON_USEDEP}]
@@ -65,6 +68,7 @@ RDEPEND="
 	>=dev-python/python-keystoneclient-1.6.0[${PYTHON_USEDEP}]
 	!~dev-python/python-keystoneclient-1.8.0[${PYTHON_USEDEP}]
 	!~dev-python/python-keystoneclient-2.1.0[${PYTHON_USEDEP}]
+	<dev-python/python-keystoneclient-3.0.0[${PYTHON_USEDEP}]
 	>=dev-python/python-novaclient-2.29.0[${PYTHON_USEDEP}]
 	!~dev-python/python-novaclient-2.33.0[${PYTHON_USEDEP}]
 	>=dev-python/python-swiftclient-2.2.0[${PYTHON_USEDEP}]
@@ -76,6 +80,7 @@ RDEPEND="
 	>=dev-python/routes-1.12.3[${PYTHON_USEDEP}]
 	!~dev-python/routes-2.0[${PYTHON_USEDEP}]
 	!~dev-python/routes-2.1[$(python_gen_usedep 'python2_7')]
+	!~dev-python/routes-2.3.0[${PYTHON_USEDEP}]
 	>=dev-python/taskflow-1.26.0[${PYTHON_USEDEP}]
 	>=dev-python/rtslib-fb-2.1.41[${PYTHON_USEDEP}]
 	>=dev-python/simplejson-2.2.0[${PYTHON_USEDEP}]
@@ -101,15 +106,12 @@ RDEPEND="
 	>=dev-python/oslo-i18n-2.1.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-vmware-1.16.0[${PYTHON_USEDEP}]
 	>=dev-python/os-brick-1.0.0[${PYTHON_USEDEP}]
+	!~dev-python/os-brick-1.4.0[${PYTHON_USEDEP}]
 	>=dev-python/os-win-0.2.3[${PYTHON_USEDEP}]
 	>=dev-python/tooz-1.28.0[${PYTHON_USEDEP}]
 	>=dev-python/google-api-python-client-1.4.2[${PYTHON_USEDEP}]
 	iscsi? (
-		tgt? ( sys-block/tgt )
-		lio? (
-			sys-block/targetcli
-			sys-block/lio-utils
-		)
+		sys-block/tgt
 		sys-block/open-iscsi
 	)
 	lvm? ( sys-fs/lvm2 )
@@ -123,19 +125,10 @@ RDEPEND="
 
 pkg_setup() {
 	linux-info_pkg_setup
-	CONFIG_CHECK_MODULES=""
-	if use tcp; then
-		CONFIG_CHECK_MODULES+="SCSI_ISCSI_ATTRS ISCSI_TCP "
-	fi
-	if use rdma; then
-		CONFIG_CHECK_MODULES+="INFINIBAND_ISER "
-	fi
-	if use infiniband; then
-		CONFIG_CHECK_MODULES+="INFINIBAND_IPOIB INFINIBAND_USER_MAD INFINIBAND_USER_ACCESS"
-	fi
+	CONFIG_CHECK_MODULES="ISCSI_TCP"
 	if linux_config_exists; then
 		for module in ${CONFIG_CHECK_MODULES}; do
-			linux_chkconfig_present ${module} || ewarn "${module} needs to be enabled"
+			linux_chkconfig_present ${module} || ewarn "${module} needs to be built as module (builtin doesn't work)"
 		done
 	fi
 	enewgroup cinder
