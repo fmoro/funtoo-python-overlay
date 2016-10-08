@@ -5,16 +5,15 @@
 EAPI=6
 PYTHON_COMPAT=( python{2_7,3_{4,5}} )
 
-inherit distutils-r1 eutils git-r3 linux-info user
+inherit distutils-r1 eutils user
 
 DESCRIPTION="A CloudFormation-compatible openstack-native cloud orchistration engine."
 HOMEPAGE="https://launchpad.net/heat"
-EGIT_REPO_URI="https://github.com/openstack/heat.git"
-EGIT_BRANCH="stable/newton"
+SRC_URI="https://tarballs.openstack.org/${PN}/${P}.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~arm64 ~x86"
 IUSE="+mysql +memcached postgres sqlite"
 REQUIRED_USE="|| ( mysql postgres sqlite )"
 

@@ -15,7 +15,7 @@ SRC_URI="https://tarballs.openstack.org/${PN}/${P}.tar.gz
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64 ~x86"
+KEYWORDS="amd64 ~arm64 x86"
 IUSE="compute-only dhcp ipv6 l3 metadata openvswitch linuxbridge server sqlite mysql postgres"
 REQUIRED_USE="!compute-only? ( || ( mysql postgres sqlite ) )
 						compute-only? ( !mysql !postgres !sqlite !dhcp !l3 !metadata !server
@@ -166,7 +166,7 @@ python_install() {
 	fi
 	if use linuxbridge; then
 		newinitd "${FILESDIR}/neutron.initd" "neutron-linuxbridge-agent"
-		newconfd "${FILESDIR}/neutron-linuxbridge-agent.confd.liberty" "neutron-linuxbridge-agent"
+		newconfd "${FILESDIR}/neutron-linuxbridge-agent.confd" "neutron-linuxbridge-agent"
 	fi
 	diropts -m 755 -o neutron -g neutron
 	dodir /var/log/neutron /var/lib/neutron

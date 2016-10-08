@@ -3,19 +3,21 @@
 # $Id$
 
 EAPI=6
-PYTHON_COMPAT=( python{2_7,3_{4,5}} )
+PYTHON_COMPAT=( python2_7 )
+# still no 34 :( https://bugs.launchpad.net/neutron/+bug/1630439
 
-inherit distutils-r1 linux-info user
+inherit distutils-r1 git-r3 linux-info user
 
 DESCRIPTION="A virtual network service for Openstack"
 HOMEPAGE="https://launchpad.net/neutron"
-SRC_URI="https://tarballs.openstack.org/${PN}/${P}.tar.gz
-	https://dev.gentoo.org/~prometheanfire/dist/openstack/neutron/mitaka/configs.tar.gz -> neutron-configs-${PV}.tar.gz
-	https://dev.gentoo.org/~prometheanfire/dist/openstack/neutron/mitaka/ml2_plugins.tar.gz -> neutron-ml2-plugins-${PV}.tar.gz"
+SRC_URI="https://dev.gentoo.org/~prometheanfire/dist/openstack/neutron/newton/configs.tar.gz -> neutron-configs-${PV}.tar.gz
+	https://dev.gentoo.org/~prometheanfire/dist/openstack/neutron/newton/ml2_plugins.tar.gz -> neutron-ml2-plugins-${PV}.tar.gz"
+EGIT_REPO_URI="https://github.com/openstack/neutron.git"
+EGIT_BRANCH="stable/newton"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64 ~x86"
+KEYWORDS=""
 IUSE="compute-only dhcp ipv6 l3 metadata openvswitch linuxbridge server sqlite mysql postgres"
 REQUIRED_USE="!compute-only? ( || ( mysql postgres sqlite ) )
 						compute-only? ( !mysql !postgres !sqlite !dhcp !l3 !metadata !server
@@ -34,26 +36,32 @@ RDEPEND="
 	>=dev-python/routes-1.12.3[${PYTHON_USEDEP}]
 	!~dev-python/routes-2.0[${PYTHON_USEDEP}]
 	!~dev-python/routes-2.1[$(python_gen_usedep 'python2_7')]
-	<=dev-python/routes-2.2[${PYTHON_USEDEP}]
+	!~dev-python/routes-2.3[${PYTHON_USEDEP}]
 	>=dev-python/debtcollector-1.2.0[${PYTHON_USEDEP}]
 	>=dev-python/eventlet-0.18.4[${PYTHON_USEDEP}]
 	>=dev-python/pecan-1.0.0[${PYTHON_USEDEP}]
+	!~dev-python/pecan-1.0.2[${PYTHON_USEDEP}]
+	!~dev-python/pecan-1.0.3[${PYTHON_USEDEP}]
+	!~dev-python/pecan-1.0.4[${PYTHON_USEDEP}]
 	>=dev-python/greenlet-0.3.2[${PYTHON_USEDEP}]
 	>=dev-python/httplib2-0.7.5[${PYTHON_USEDEP}]
-	>=dev-python/requests-2.8.1[${PYTHON_USEDEP}]
-	!~dev-python/requests-2.9.0[${PYTHON_USEDEP}]
+	>=dev-python/requests-2.10.0[${PYTHON_USEDEP}]
 	>=dev-python/jinja-2.8[${PYTHON_USEDEP}]
 	>=dev-python/keystonemiddleware-4.0.0[${PYTHON_USEDEP}]
 	!=dev-python/keystonemiddleware-4.1.0[${PYTHON_USEDEP}]
-	>=dev-python/netaddr-0.7.12[${PYTHON_USEDEP}]
+	!=dev-python/keystonemiddleware-4.5.0[${PYTHON_USEDEP}]
+	>=dev-python/netaddr-0.7.13[${PYTHON_USEDEP}]
 	!~dev-python/netaddr-0.7.16[${PYTHON_USEDEP}]
 	>=dev-python/netifaces-0.10.4[${PYTHON_USEDEP}]
-	>=dev-python/neutron-lib-0.0.1[${PYTHON_USEDEP}]
-	>=dev-python/python-neutronclient-2.6.0[${PYTHON_USEDEP}]
-	!~dev-python/python-neutronclient-4.1.0[${PYTHON_USEDEP}]
+	>=dev-python/neutron-lib-0.4.0[${PYTHON_USEDEP}]
+	>=dev-python/python-neutronclient-5.1.0[${PYTHON_USEDEP}]
 	>=dev-python/retrying-1.2.3[${PYTHON_USEDEP}]
 	!~dev-python/retrying-1.3.0[${PYTHON_USEDEP}]
 	>=dev-python/ryu-3.30[${PYTHON_USEDEP}]
+	!~dev-python/ryu-4.1[${PYTHON_USEDEP}]
+	!~dev-python/ryu-4.2[${PYTHON_USEDEP}]
+	!~dev-python/ryu-4.2.1[${PYTHON_USEDEP}]
+	!~dev-python/ryu-4.4[${PYTHON_USEDEP}]
 	compute-only? (
 		>=dev-python/sqlalchemy-1.0.10[${PYTHON_USEDEP}]
 		<dev-python/sqlalchemy-1.1.0[${PYTHON_USEDEP}]
@@ -63,39 +71,45 @@ RDEPEND="
 		<dev-python/sqlalchemy-1.1.0[sqlite,${PYTHON_USEDEP}]
 	)
 	mysql? (
-		dev-python/mysql-python
+		>=dev-python/pymysql-0.6.2[${PYTHON_USEDEP}]
+		!~dev-python/pymysql-0.7.7[${PYTHON_USEDEP}]
 		>=dev-python/sqlalchemy-1.0.10[${PYTHON_USEDEP}]
 		<dev-python/sqlalchemy-1.1.0[${PYTHON_USEDEP}]
 	)
 	postgres? (
-		dev-python/psycopg:2
+		>=dev-python/psycopg-2.5.0
 		>=dev-python/sqlalchemy-1.0.10[${PYTHON_USEDEP}]
 		<dev-python/sqlalchemy-1.1.0[${PYTHON_USEDEP}]
 	)
 	>=dev-python/webob-1.2.3[${PYTHON_USEDEP}]
-	>=dev-python/keystoneauth-2.1.0[${PYTHON_USEDEP}]
-	>=dev-python/alembic-0.8.0[${PYTHON_USEDEP}]
+	>=dev-python/keystoneauth-2.10.0[${PYTHON_USEDEP}]
+	>=dev-python/alembic-0.8.4[${PYTHON_USEDEP}]
 	>=dev-python/six-1.9.0[${PYTHON_USEDEP}]
-	>=dev-python/stevedore-1.5.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-concurrency-3.5.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-config-3.7.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-context-0.2.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-db-4.1.0[${PYTHON_USEDEP}]
+	>=dev-python/stevedore-1.16.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-cache-1.5.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-concurrency-3.8.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-config-3.14.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-context-2.9.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-db-4.10.0[${PYTHON_USEDEP}]
+	!~dev-python/oslo-db-4.13.1[${PYTHON_USEDEP}]
+	!~dev-python/oslo-db-4.13.2[${PYTHON_USEDEP}]
 	>=dev-python/oslo-i18n-2.1.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-log-1.14.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-messaging-4.0.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-messaging-5.2.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-middleware-3.0.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-policy-0.5.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-policy-1.9.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-reports-0.6.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-rootwrap-2.0.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-rootwrap-5.0.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-serialization-1.10.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-service-1.0.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-utils-3.5.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-versionedobjects-1.5.0[${PYTHON_USEDEP}]
-	>=dev-python/ovs-2.4.0[$(python_gen_usedep 'python2_7')]
+	>=dev-python/oslo-service-1.10.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-utils-3.16.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-versionedobjects-1.13.0[${PYTHON_USEDEP}]
+	>=dev-python/osprofiler-1.4.0[${PYTHON_USEDEP}]
+	>=dev-python/ovs-2.6.0[${PYTHON_USEDEP}]
 	>=dev-python/python-novaclient-2.29.0[${PYTHON_USEDEP}]
 	!~dev-python/python-novaclient-2.33.0[${PYTHON_USEDEP}]
 	>=dev-python/python-designateclient-1.5.0[${PYTHON_USEDEP}]
+	virtual/python-singledispatch[${PYTHON_USEDEP}]
 	dev-python/pyudev[${PYTHON_USEDEP}]
 	sys-apps/iproute2
 	net-misc/bridge-utils
@@ -103,7 +117,7 @@ RDEPEND="
 	net-firewall/iptables
 	net-firewall/ebtables
 	net-firewall/conntrack-tools
-	openvswitch? ( <=net-misc/openvswitch-2.5.9999 )
+	openvswitch? ( <=net-misc/openvswitch-2.6.9999 )
 	ipv6? (
 		net-misc/radvd
 		>=net-misc/dibbler-1.0.1
@@ -166,7 +180,7 @@ python_install() {
 	fi
 	if use linuxbridge; then
 		newinitd "${FILESDIR}/neutron.initd" "neutron-linuxbridge-agent"
-		newconfd "${FILESDIR}/neutron-linuxbridge-agent.confd.liberty" "neutron-linuxbridge-agent"
+		newconfd "${FILESDIR}/neutron-linuxbridge-agent.confd" "neutron-linuxbridge-agent"
 	fi
 	diropts -m 755 -o neutron -g neutron
 	dodir /var/log/neutron /var/lib/neutron
