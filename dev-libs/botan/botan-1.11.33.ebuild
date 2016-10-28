@@ -1,9 +1,9 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI="5"
-PYTHON_COMPAT=( python{2_7,3_3,3_4} )
+EAPI="6"
+PYTHON_COMPAT=( python{2_7,3_{3,4,5}} )
 
 inherit eutils multilib python-r1 toolchain-funcs
 
@@ -16,7 +16,7 @@ SRC_URI="http://botan.randombit.net/releases/${MY_P}.tgz"
 KEYWORDS="~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~ppc-macos"
 SLOT="0"
 LICENSE="BSD"
-IUSE="bindist doc boost python bzip2 lzma sqlite ssl static-libs zlib"
+IUSE="bindist doc boost python bzip2 libressl lzma sqlite ssl static-libs zlib"
 
 S="${WORKDIR}/${MY_P}"
 
@@ -27,7 +27,10 @@ RDEPEND="bzip2? ( >=app-arch/bzip2-1.0.5 )
 	boost? ( ${PYTHON_DEPS} >=dev-libs/boost-1.48[python?,${PYTHON_USEDEP}] )
 	lzma? ( app-arch/xz-utils )
 	sqlite? ( dev-db/sqlite:3 )
-	ssl? ( >=dev-libs/openssl-0.9.8g:*[bindist=] )"
+	ssl? (
+		!libressl? ( >=dev-libs/openssl-0.9.8g:0[bindist=] )
+		libressl? ( dev-libs/libressl )
+	)"
 DEPEND="${RDEPEND}
 	doc? ( dev-python/sphinx )"
 
@@ -41,7 +44,7 @@ pkg_pretend() {
 }
 
 src_prepare() {
-	epatch "${FILESDIR}/${P}-build-python.patch"
+	default
 	sed \
 		-e "/^install:/s/ docs//" \
 		-i src/build-data/makefile/gmake.in || die "sed failed"
@@ -52,6 +55,7 @@ src_configure() {
 	local disable_modules=( proc_walk unix_procs )
 	use boost || disable_modules+=( "boost" )
 	use bindist && disable_modules+=( "ecdsa" )
+	use python || disable_modules+=( "ffi" )
 	elog "Disabling modules: ${disable_modules[@]}"
 
 	# Enable v9 instructions for sparc64

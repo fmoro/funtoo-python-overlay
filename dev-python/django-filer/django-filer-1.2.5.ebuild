@@ -8,8 +8,8 @@ PYTHON_COMPAT=( python{2_{6,7},3_{3,4,5}} )
 
 inherit distutils-r1
 
-DESCRIPTION="Adds pretty CSS styles for the django CMS admin interface."
-HOMEPAGE="https://pypi.python.org/pypi/djangocms-admin-style"
+DESCRIPTION="File management application for django that makes handling of files and images"
+HOMEPAGE="https://pypi.python.org/pypi/django-filer"
 SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 
 LICENSE="BSD"
@@ -17,7 +17,12 @@ KEYWORDS="~amd64 ~x86"
 SLOT="0"
 IUSE=""
 
-RDEPEND=""
+RDEPEND="
+	>=dev-python/django-1.5
+	>=dev-python/django_polymorphic-0.2
+	>=dev-python/easy-thumbnails-1.0
+	dev-python/django-mptt
+"
 
 DEPEND="
 	${RDEPEND}
