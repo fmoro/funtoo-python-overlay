@@ -106,6 +106,7 @@ pkg_setup() {
 
 src_prepare() {
 	eapply "${WORKDIR}/patches"
+	eapply "${FILESDIR}/${PN}-3.16.9-hpps-indent.patch"
 
 	default
 
