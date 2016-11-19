@@ -24,7 +24,7 @@ CDEPEND="
 	<dev-python/cached-property-2[${PYTHON_USEDEP}]
 	>=dev-python/dockerpty-0.4.1[${PYTHON_USEDEP}]
 	<dev-python/dockerpty-0.5[${PYTHON_USEDEP}]
-	>=dev-python/docker-py-1.10.4[${PYTHON_USEDEP}]
+	>=dev-python/docker-py-1.10.6[${PYTHON_USEDEP}]
 	<dev-python/docker-py-2.0[${PYTHON_USEDEP}]
 	>=dev-python/docopt-0.6.1[${PYTHON_USEDEP}]
 	<dev-python/docopt-0.7[${PYTHON_USEDEP}]
@@ -45,8 +45,8 @@ CDEPEND="
 	$(python_gen_cond_dep '<dev-python/enum34-2[${PYTHON_USEDEP}]' 'python2_7' )
 "
 DEPEND="
+	${CDEPEND}
 	test? (
-		${CDEPEND}
 		dev-python/pytest[${PYTHON_USEDEP}]
 		$(python_gen_cond_dep '>=dev-python/mock-1.0.1[${PYTHON_USEDEP}]' 'python2_7' )
 	)
