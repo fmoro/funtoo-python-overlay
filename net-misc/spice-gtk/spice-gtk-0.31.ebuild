@@ -13,12 +13,12 @@ PYTHON_COMPAT=( python{2_7,3_{4,5}} )
 inherit autotools eutils multibuild python-single-r1 vala
 
 DESCRIPTION="Set of GObject and Gtk objects for connecting to Spice servers and a client GUI"
-HOMEPAGE="http://spice-space.org http://gitorious.org/spice-gtk"
+HOMEPAGE="http://spice-space.org https://cgit.freedesktop.org/spice/spice-gtk/"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
 SRC_URI="http://spice-space.org/download/gtk/${P}.tar.bz2"
-KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~alpha amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc x86"
 IUSE="dbus gstreamer gtk3 +introspection lz4 policykit pulseaudio python sasl smartcard static-libs usbredir vala webdav libressl"
 
 REQUIRED_USE="
@@ -45,6 +45,7 @@ RDEPEND="
 	x11-libs/gtk+:2[introspection?]
 	>=dev-libs/glib-2.28:2
 	>=x11-libs/cairo-1.2
+	x11-libs/libX11
 	virtual/jpeg:0=
 	sys-libs/zlib
 	introspection? ( dev-libs/gobject-introspection )
@@ -85,6 +86,7 @@ DEPEND="${RDEPEND}
 # dev-lang/perl
 
 src_prepare() {
+	epatch "${FILESDIR}"/${P}-x11-libs.patch
 	epatch_user
 
 	AT_NO_RECURSIVE="yes" eautoreconf
@@ -93,6 +95,11 @@ src_prepare() {
 }
 
 src_configure() {
+	# Prevent sandbox violations, bug #581836
+	# https://bugzilla.gnome.org/show_bug.cgi?id=744134
+	# https://bugzilla.gnome.org/show_bug.cgi?id=744135
+	addpredict /dev
+
 	local myconf
 	local audio="no"
 
@@ -142,10 +149,20 @@ src_configure() {
 }
 
 src_compile() {
+	# Prevent sandbox violations, bug #581836
+	# https://bugzilla.gnome.org/show_bug.cgi?id=744134
+	# https://bugzilla.gnome.org/show_bug.cgi?id=744135
+	addpredict /dev
+
 	multibuild_foreach_variant run_in_build_dir default
 }
 
 src_test() {
+	# Prevent sandbox violations, bug #581836
+	# https://bugzilla.gnome.org/show_bug.cgi?id=744134
+	# https://bugzilla.gnome.org/show_bug.cgi?id=744135
+	addpredict /dev
+
 	multibuild_foreach_variant run_in_build_dir default
 }
 

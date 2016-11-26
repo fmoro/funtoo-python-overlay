@@ -5,7 +5,7 @@
 EAPI=5
 
 AUTOTOOLS_IN_SOURCE_BUILD=yes
-PYTHON_COMPAT=( python{2_7,3_{3,4,5}} )
+PYTHON_COMPAT=( python{2_7,3_{4,5}} )
 
 inherit versionator autotools-utils distutils-r1
 

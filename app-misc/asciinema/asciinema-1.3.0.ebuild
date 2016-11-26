@@ -4,7 +4,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python{3_3,3_4,3_5})
+PYTHON_COMPAT=( python3_{4,5})
 inherit distutils-r1
 
 DESCRIPTION="Command line recorder for asciinema.org service"
@@ -13,7 +13,7 @@ SRC_URI="https://github.com/asciinema/asciinema/archive/v1.3.0.tar.gz -> ${P}.ta
 
 LICENSE="GPL-3+"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 IUSE="test"
 
 DEPEND="

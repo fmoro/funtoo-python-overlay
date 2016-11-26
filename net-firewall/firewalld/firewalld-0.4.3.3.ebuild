@@ -3,7 +3,7 @@
 # $Id$
 
 EAPI=5
-PYTHON_COMPAT=( python{2_7,3_{3,4,5}} )
+PYTHON_COMPAT=( python{2_7,3_{4,5}} )
 #BACKPORTS=
 
 inherit autotools eutils gnome2-utils python-r1 systemd multilib bash-completion-r1
@@ -15,7 +15,7 @@ SRC_URI="https://fedorahosted.org/released/${PN}/${P}.tar.bz2
 
 LICENSE="GPL-2+"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="amd64 x86"
 IUSE="gui"
 
 RDEPEND="${PYTHON_DEPS}

@@ -1,10 +1,10 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
 EAPI=5
 
-PYTHON_COMPAT=( python{2_7,3_3,3_4,3_5} )
+PYTHON_COMPAT=( python{2_7,3_{4,5}} )
 EGIT_REPO_URI="https://github.com/dbcli/mycli.git"
 inherit distutils-r1 git-r3
 
@@ -20,8 +20,9 @@ DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
 RDEPEND="
 	>=dev-python/click-4.1[${PYTHON_USEDEP}]
 	>=dev-python/configobj-5.0.6[${PYTHON_USEDEP}]
+	=dev-python/prompt_toolkit-0.57[${PYTHON_USEDEP}]
+	>=dev-python/pycrypto-2.6.1[${PYTHON_USEDEP}]
 	>=dev-python/pygments-2.0[${PYTHON_USEDEP}]
-	=dev-python/prompt_toolkit-0.46[${PYTHON_USEDEP}]
 	>=dev-python/pymysql-0.6.6[${PYTHON_USEDEP}]
 	>=dev-python/python-sqlparse-0.1.16[${PYTHON_USEDEP}]
 "
