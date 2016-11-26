@@ -3,7 +3,7 @@
 # $Header: /var/cvsroot/gentoo-x86/dev-python/django-tastypie/django-tastypie-0.9.15.ebuild,v 1.4 2013/06/06 09:32:46 idella4 Exp $
 
 EAPI=5
-PYTHON_COMPAT=( python{2_6,2_7,3_3,3_4,3_5} )
+PYTHON_COMPAT=( python{2_7,3_{4,5}} )
 
 inherit distutils-r1
 
@@ -17,7 +17,7 @@ IUSE="bip doc digest xml oauth test yaml"
 LICENSE="BSD"
 SLOT="0"
 
-RDEPEND=">=dev-python/mimeparse-0.1.3[${PYTHON_USEDEP}]
+RDEPEND=">=dev-python/mimeparse-0.1.4[${PYTHON_USEDEP}]
 	>=dev-python/python-dateutil-2.1[${PYTHON_USEDEP}]
 	>=dev-python/django-1.5[${PYTHON_USEDEP}]
 	bip? ( dev-python/biplist[${PYTHON_USEDEP}] )
@@ -37,12 +37,12 @@ DEPEND="${RDEPEND}
 		dev-python/python-digest[${PYTHON_USEDEP}]
 		dev-python/biplist[${PYTHON_USEDEP}]
 		dev-python/pyyaml[${PYTHON_USEDEP}]
-		>=dev-python/mimeparse-0.1.3[${PYTHON_USEDEP}]
+		>=dev-python/mimeparse-0.1.4[${PYTHON_USEDEP}]
 		>=dev-python/python-dateutil-2.1[${PYTHON_USEDEP}]
 		dev-python/mock[${PYTHON_USEDEP}]
 	)"
 
-PATCHES=( "${FILESDIR}"/runtests.patch )
+#PATCHES=( "${FILESDIR}"/runtests.patch )
 
 python_compile_all() {
 	use doc && emake -C docs html
