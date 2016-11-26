@@ -10,7 +10,7 @@ KEYWORDS="~amd64 ~arm"
 inherit ros-catkin
 
 # Do it that way to avoid ros-catkin pulling in python-r1
-PYTHON_COMPAT=( python{2_7,3_3,3_4,3_5} )
+PYTHON_COMPAT=( python{2_7,3_{4,5}} )
 inherit python-single-r1
 
 DESCRIPTION="Retrieves information about ROS packages available on the filesystem"

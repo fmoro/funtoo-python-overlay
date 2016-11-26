@@ -6,7 +6,7 @@ EAPI=5
 
 ROS_REPO_URI="https://github.com/ros-visualization/python_qt_binding"
 KEYWORDS="~amd64"
-PYTHON_COMPAT=( python{2_7,3_{3,4,5}} )
+PYTHON_COMPAT=( python{2_7,3_{4,5}} )
 
 inherit ros-catkin
 
@@ -16,6 +16,6 @@ SLOT="0"
 IUSE=""
 
 RDEPEND="
-	dev-python/PyQt5[${PYTHON_USEDEP}]
+	dev-python/PyQt5[gui,widgets,${PYTHON_USEDEP}]
 "
 DEPEND="${RDEPEND}"

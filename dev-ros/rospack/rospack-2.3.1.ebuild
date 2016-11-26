@@ -1,4 +1,4 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -10,7 +10,7 @@ KEYWORDS="~amd64 ~arm"
 inherit ros-catkin
 
 # Do it that way to avoid ros-catkin pulling in python-r1
-PYTHON_COMPAT=( python{2_7,3_{3,4,5}} )
+PYTHON_COMPAT=( python{2_7,3_{4,5}} )
 inherit python-single-r1
 
 DESCRIPTION="Retrieves information about ROS packages available on the filesystem"

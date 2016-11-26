@@ -1,4 +1,4 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -11,13 +11,14 @@ ROS_SUBDIR=tools/${PN}
 
 inherit ros-catkin
 
-DESCRIPTION="Prints information about the ROS Computation Graph"
+DESCRIPTION="ROS Master implementation"
 LICENSE="BSD"
 SLOT="0"
 IUSE=""
 
 RDEPEND="
-	dev-python/netifaces[${PYTHON_USEDEP}]
-	dev-python/rospkg[${PYTHON_USEDEP}]"
+	dev-ros/rosgraph[${PYTHON_USEDEP}]
+	dev-python/defusedxml[${PYTHON_USEDEP}]
+"
 DEPEND="${RDEPEND}
-	test? ( dev-python/mock[${PYTHON_USEDEP}] dev-python/nose[${PYTHON_USEDEP}] )"
+	test? ( dev-python/nose[${PYTHON_USEDEP}] )"

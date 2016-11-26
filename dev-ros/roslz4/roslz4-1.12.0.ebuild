@@ -6,15 +6,16 @@ EAPI=5
 
 ROS_REPO_URI="https://github.com/ros/ros_comm"
 KEYWORDS="~amd64 ~arm"
-PYTHON_COMPAT=( python{2_7,3_3,3_4,3_5} )
-ROS_SUBDIR=tools/${PN}
+PYTHON_COMPAT=( python{2_7,3_{4,5}} )
+ROS_SUBDIR=utilities/${PN}
 
 inherit ros-catkin
 
-DESCRIPTION="ROS Master implementation"
+DESCRIPTION="Python and C++ implementation of the LZ4 streaming format"
 LICENSE="BSD"
 SLOT="0"
 IUSE=""
 
-RDEPEND="dev-ros/rosgraph[${PYTHON_USEDEP}]"
-DEPEND="${RDEPEND}"
+RDEPEND="app-arch/lz4"
+DEPEND="${RDEPEND}
+	test? ( dev-cpp/gtest )"
