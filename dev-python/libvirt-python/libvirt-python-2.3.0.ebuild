@@ -1,4 +1,4 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -20,7 +20,7 @@ if [[ ${PV} = *9999* ]]; then
 	RDEPEND="app-emulation/libvirt:=[-python(-)]"
 else
 	SRC_URI="http://libvirt.org/sources/python/${MY_P}.tar.gz"
-	KEYWORDS="~amd64 ~x86"
+	KEYWORDS="amd64 x86"
 	RDEPEND="app-emulation/libvirt:0/${PV}"
 fi
 S="${WORKDIR}/${P%_rc*}"
@@ -35,6 +35,9 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig
 	test? ( dev-python/lxml[${PYTHON_USEDEP}]
 		dev-python/nose[${PYTHON_USEDEP}] )"
+
+# testsuite is currently not included in upstream tarball
+RESTRICT="test"
 
 python_test() {
 	esetup.py test

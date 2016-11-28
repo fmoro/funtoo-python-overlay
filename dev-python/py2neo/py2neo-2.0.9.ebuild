@@ -22,10 +22,3 @@ python_compile() {
 	python_is_python3 || local -x CFLAGS="${CFLAGS} -fno-strict-aliasing"
 	distutils-r1_python_compile
 }
-
-#DEPEND="doc? ( dev-python/sphinx )"
-#src_compile() {
-#	distutils-r1_src_compile
-#
-#	use doc && emake -C book html
-#}
