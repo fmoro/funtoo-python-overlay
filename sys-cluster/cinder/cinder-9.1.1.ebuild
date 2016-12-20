@@ -123,7 +123,7 @@ RDEPEND="
 #PATCHES=(
 #)
 
-pkg_setup() {
+pkg_pretend() {
 	linux-info_pkg_setup
 	CONFIG_CHECK_MODULES=""
 	if use tcp; then
@@ -140,6 +140,9 @@ pkg_setup() {
 			linux_chkconfig_present ${module} || ewarn "${module} needs to be enabled"
 		done
 	fi
+}
+
+pkg_setup() {
 	enewgroup cinder
 	enewuser cinder -1 -1 /var/lib/cinder cinder
 }
@@ -154,8 +157,8 @@ python_test() {
 	nosetests -I test_wsgi.py cinder/tests/ || die "tests failed under python2.7"
 }
 
-python_install() {
-	distutils-r1_python_install
+python_install_all() {
+	distutils-r1_python_install_all
 	keepdir /etc/cinder
 	dodir /etc/cinder/rootwrap.d
 
