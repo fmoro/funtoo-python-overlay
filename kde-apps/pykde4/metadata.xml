@@ -2,10 +2,10 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<maintainer type="project">
-		<email>crypto@gentoo.org</email>
-		<name>Crypto</name>
+		<email>kde@gentoo.org</email>
+		<name>Gentoo KDE Project</name>
 	</maintainer>
 	<use>
-		<flag name="common-lisp">Install common-lisp files</flag>
+		<flag name="akonadi">Compile bindings for Akonadi</flag>
 	</use>
 </pkgmetadata>
