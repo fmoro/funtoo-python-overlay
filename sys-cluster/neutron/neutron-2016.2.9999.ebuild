@@ -112,6 +112,7 @@ RDEPEND="
 	virtual/python-singledispatch[${PYTHON_USEDEP}]
 	dev-python/pyudev[${PYTHON_USEDEP}]
 	sys-apps/iproute2
+	net-misc/iputils[arping]
 	net-misc/bridge-utils
 	net-firewall/ipset
 	net-firewall/iptables
@@ -127,7 +128,7 @@ RDEPEND="
 #PATCHES=(
 #)
 
-pkg_setup() {
+pkg_pretend() {
 	linux-info_pkg_setup
 	CONFIG_CHECK_MODULES="VLAN_8021Q IP6_NF_FILTER IP6_NF_IPTABLES IP_NF_TARGET_REJECT \
 	IP_NF_MANGLE IP_NF_TARGET_MASQUERADE NF_NAT_IPV4 NF_CONNTRACK_IPV4 NF_DEFRAG_IPV4 \
@@ -137,6 +138,9 @@ pkg_setup() {
 			linux_chkconfig_present ${module} || ewarn "${module} needs to be enabled in kernel"
 		done
 	fi
+}
+
+pkg_setup() {
 	enewgroup neutron
 	enewuser neutron -1 -1 /var/lib/neutron neutron
 }
@@ -153,8 +157,8 @@ src_prepare() {
 	distutils-r1_python_prepare_all
 }
 
-python_install() {
-	distutils-r1_python_install
+python_install_all() {
+	distutils-r1_python_install_all
 	if use server; then
 		newinitd "${FILESDIR}/neutron.initd" "neutron-server"
 		newconfd "${FILESDIR}/neutron-server.confd" "neutron-server"
@@ -196,10 +200,6 @@ python_install() {
 	doins "etc/rootwrap.conf"
 	doins -r "etc/neutron/rootwrap.d"
 
-	insopts -m 0644
-	insinto "/usr/lib64/python2.7/site-packages/neutron/db/migration/alembic_migrations/"
-	doins -r "neutron/db/migration/alembic_migrations/versions"
-
 	#add sudoers definitions for user neutron
 	insinto /etc/sudoers.d/
 	insopts -m 0440 -o root -g root
@@ -217,6 +217,14 @@ python_install() {
 
 	#remove superfluous stuff
 	rm -R "${D}/usr/etc/"
+}
+
+python_install() {
+	distutils-r1_python_install
+	# copy migration conf file (not coppied on install via setup.py script)
+	insopts -m 0644
+	insinto "/$(python_get_sitedir)/neutron/db/migration/alembic_migrations/"
+	doins -r "neutron/db/migration/alembic_migrations/versions"
 }
 
 pkg_postinst() {
