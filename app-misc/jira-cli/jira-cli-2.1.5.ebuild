@@ -1,9 +1,9 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
 EAPI=6
-PYTHON_COMPAT=(python{2_7,3_{4,5}})
+PYTHON_COMPAT=( python{2_7,3_{4,5}} )
 
 inherit distutils-r1
 
@@ -22,7 +22,7 @@ RDEPEND="${CDEPEND}
 	dev-python/requests[${PYTHON_USEDEP}]
 	dev-python/termcolor[${PYTHON_USEDEP}]
 	dev-python/six[${PYTHON_USEDEP}]
-	dev-python/jira[${PYTHON_USEDEP}]
+	dev-python/jira[${PYTHON_USEDEP},oauth]
 	dev-python/suds[${PYTHON_USEDEP}]
 	>=dev-python/keyring-10.0.2-r1[${PYTHON_USEDEP}]
 	dev-python/keyrings_alt[${PYTHON_USEDEP}]"
